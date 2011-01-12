@@ -1,27 +1,23 @@
-
 package Catalyst::Model::CouchDB;
-use base qw/Catalyst::Model/;
+use Moose;
+extends 'Catalyst::Model';
+
+use namespace::autoclean;
 use strict;
 use warnings;
-
-use NEXT;
-use Carp qw(confess);
 use CouchDB::Client;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
-sub new {
+sub COMPONENT {
     my ($class, $c, $config) = @_;
-    my $self = $class->NEXT::new($c, $config);
+	my $self = $class->next::method(@_);
     $self->config($config);
-
     my $conf = $self->config;
     $self->{couchdb_client} = CouchDB::Client->new($conf);
     $c->log->debug("CouchDB::Client instantiated") if $c->debug;
-
-    return $self;
+	return $self;
 }
-
 
 sub AUTOLOAD {
     my ($self, @args) = @_;
@@ -81,19 +77,20 @@ Called from Catalyst.
 
 =head1 AUTHOR
 
-Robin Berjon, <robin @t berjon d.t com>
+Robin Berjon <robin @t berjon d.t com>,
+Julien Gilles <jul.gil@gmail.com>
 
-=head1 BUGS 
+=head1 BUGS
 
 Please report any bugs or feature requests to bug-catalyst-model-couchdb at rt.cpan.org, or through the
 web interface at http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Catalyst-Model-CouchDB.
 
-=head1 COPYRIGHT & LICENSE 
+=head1 COPYRIGHT & LICENSE
 
 Copyright 2008 Robin Berjon, all rights reserved.
 
-This library is free software; you can redistribute it and/or modify it under the same terms as 
-Perl itself, either Perl version 5.8.8 or, at your option, any later version of Perl 5 you may 
+This library is free software; you can redistribute it and/or modify it under the same terms as
+Perl itself, either Perl version 5.8.8 or, at your option, any later version of Perl 5 you may
 have available.
 
 =cut

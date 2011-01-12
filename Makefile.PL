@@ -6,7 +6,7 @@ perl_version '5.006';
 license 'perl';
 all_from 'lib/Catalyst/Model/CouchDB.pm';
 
-requires 'Catalyst';
+requires 'Catalyst' => '5.8';
 requires 'CouchDB::Client' => '0.04';
 
 WriteAll;
